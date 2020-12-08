@@ -25,6 +25,7 @@ cp stalonetray/stalonetrayrc $HOME/.stalonetrayrc
 sudo cp xdm/Xsetup /etc/X11/xdm/Xsetup
 sudo cp xdm/Xresources /etc/X11/xdm/Xresources
 sudo cp xdm/xdm_login.png /usr/lib/X11/background/xdm_login.png
+mkdir $HOME/data
 
 cd st-0.8.4
 sudo make clean install

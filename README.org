@@ -120,7 +120,7 @@ Now follows the main installation of this git repo.
 
 #+BEGIN_SRC
 user?> git clone https://github.com/matthias-stein/iOTA360_debian_xmonad.git
-user?> cd iota_xmnd
+user?> cd iOTA360_debian_xmonad
 user?> ./install.sh
 user?> sudo reboot now
 #+END_SRC
@@ -147,8 +147,9 @@ effect on the logo.
 In a VM I manually installed [ST - Simple Terminal](https://st.suckless.org/)
 by downloading the .tar.gz from the link. Before running
 
-.. code:: bash
-    ?> sudo make clean install
+#+BEGIN_SRC
+user?> sudo make clean install
+#+END_SRC
 
 in that directory, I patched ST with the following patches, all available on the
 Suckless webpage.
@@ -161,8 +162,9 @@ Suckless webpage.
 
 by running:
 
-.. code:: bash
-    ?> patch -p1 < patch_file.diff
+#+BEGIN_SRC
+user?> patch -p1 < patch_file.diff
+#+END_SRC
 
 which worked for all patches except the solarized color package. The lines from
 that .diff I copied over manually to replace the color setting in the default
