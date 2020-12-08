@@ -1,0 +1,172 @@
+* iOTA 360 - Debian 10 (Buster) / Xmonad
+
+In October 2018, I was looking for a small, portable device, that I planned to
+use for gaming. It was meant to be used in RPG sessions where I am the game
+master to provide me with all the rules and supplements (without needing to
+carry tons of books with me, like in earlier times) and the campaign being
+played (instead of handling piles of paper as in earlier times), and to be used
+for miniture wargames to provide the rules and to take notes of the game for a
+later battle report.
+
+After looking for options, I finally settled on the [[https://www.amazon.de/gp/product/B0751KM8V1/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1&fpw=alm][iOTA 360 from Amazon]].
+
+Of course I did not want to use Windows, but run Ubuntu as on my main laptop, as
+this makes things easier and more comfortable for me. So I found [[https://blog.gulinux.net/en/blog/2018-03-03-installing-ubuntu-on-iota-360][an article]] of
+someone, who managed to run Ubuntu on the iOTA 360; one of the reasons I decided
+to buy this model.
+
+For about two years I used XUbuntu 18.04 on the computer, and this worked fine.
+The installation had been quite a journey, though, even following the linked
+artice. In 2020 I got into Tiling Window Managers, wanted to upgrade the OS on
+the machine, wanted ro REPLACE the desktop environment with a Tiling Window
+Manager, and wanted to make the whole process easily re-producible for the
+future.
+
+The result of this is this "mini distribution" where I install a minimal Debian
+10 "buster" manually, then set up the window manager, the main programs, etc. by
+running a shell script that uses the configuration files from this git
+repository.
+
+The programs the script will install are:
+
++ Doom Emacs
++ Vim
++ Firefox
++ VIFM
++ GIMP
++ Inkscape
++ Suckless ST (main terminal)
++ Rxvt, XTerm (as backups)
+
+
+** Base Debian System
+
+I first tried to use the [[https://cdimage.debian.org/debian-cd/current/multi-arch/iso-cd/][multiarch ISO]].
+With that ISO the WiFi card was not recognized, and I had to use my mobile in
+USB teethering mode, as the iOTA does not have a LAN port. After installation,
+though, I only got a blank screen after booting. Googling indicated that this
+would be due to missing, non-free software.
+
+Next, I downloaded [[https://cdimage.debian.org/cdimage/unofficial/non-free/cd-including-firmware/current/multi-arch/iso-cd/][the non-free multiarch ISO]],
+which apparently includes the missing firmware. With that ISO even the WiFi card
+was directly recognized and I was able to use it during the installation.
+
+I created the bootable USB drive using the *Startup Disk Creator* on Ubuntu
+Gnome. I used the graphical Debian installer to go though the setup. When the
+installer asked for "Select and install software" I deselected everything
+except *Standard System Utilities*.
+
+
+** First Boot
+
+The first boot after the base installation, after unlocking, I was in a shell.
+
+*** WiFi Connection
+
+First thing to do was to setup a WiFi connection; I mainly followed the
+[[https://wiki.debian.org/WiFi/HowToUse#Command_Line][Debian website]]. First, the
+WiFi device needs to be identified:
+
+#+BEGIN_SRC bash
+user?> sudo ip a
+#+END_SRC
+
+This provided me with the name of my WiFi card, which in my case is ``wlan0``.
+The card was brought up:
+
+#+BEGIN_SRC bash
+user?> sudo ip link set wlan0 up
+#+END_SRC
+
+Next I scanned for available WLANs:
+
+#+BEGIN_SRC
+user?> sudo iwlist wlan0 scan | grep ESSID
+#+END_SRC
+
+Then I edited ~/etc/network/interfaces~. The required configuration is much
+dependent on the particular setup. The following example works for my iOTA360
+with a WPA/WPA2 network, the following lines I appended to the file:
+
+#+BEGIN_SRC bash
+# network settings @home
+allow-hotplug wlan0
+iface wlan0 inet dhcp
+    wpa-ssid ESSID
+    wpa-psk PASSWORD
+    # needed for a hidden network SSID:
+    wpa-scan-ssid 1
+#+END_SRC
+
+Then I brought up the interface and verified the connection:
+
+#+BEGIN_SRC
+user?> ifup wlan0
+user?> iw wlan0 link
+user?> ip a
+#+END_SRC
+
+
+** Install Programms
+
+The only program I installed manually (after the obligatory system upgrade) is
+git, everthing else is part of the git repository's ~install.sh~ I will clone in
+the next step.
+
+
+** iOTA360 - Debian 10 (Buster) / Xmonad git repository
+
+Now follows the main installation of this git repo.
+
+#+BEGIN_SRC
+user?> git clone https://github.com/matthias-stein/iOTA360_debian_xmonad.git
+user?> cd iota_xmnd
+user?> ./install.sh
+user?> sudo reboot now
+#+END_SRC
+
+For the installation of Doom Emacs, two questions need to be answered, apart
+from that the rest should run automatically. After installation, you can boot
+into the Xmonad window manager.
+
+
+** Ressources
+
+*** Wallpaper
+
+The logo of the wallpaper and loginscreen was taken from
+[the Debian page](https://www.debian.org/logos/index.de.html). I changed the
+colors to those from the
+[Solarized theme](https://ethanschoonover.com/solarized/), made a radial
+background of blues (login) and greys (wallpaper), and put a *Cutout Glow*
+effect on the logo.
+
+
+*** Suckless ST - Simple Terminal
+
+In a VM I manually installed [ST - Simple Terminal](https://st.suckless.org/)
+by downloading the .tar.gz from the link. Before running
+
+.. code:: bash
+    ?> sudo make clean install
+
+in that directory, I patched ST with the following patches, all available on the
+Suckless webpage.
+
++   alpha
++   clipboard
++   scrollback
++   no-bold-colors
++   solarized-dark
+
+by running:
+
+.. code:: bash
+    ?> patch -p1 < patch_file.diff
+
+which worked for all patches except the solarized color package. The lines from
+that .diff I copied over manually to replace the color setting in the default
+~config.def.h~.
+
+The above described build is part of the git repository and gets installed by
+~install.sh~.
