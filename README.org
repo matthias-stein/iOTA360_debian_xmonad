@@ -38,7 +38,8 @@ The programs the script will install are:
 + Suckless ST (main terminal)
 + Rxvt, XTerm (as backups)
 
-#+begin_warning
+** Issues
+
 So far I did not manage to have debian recognize the iOTA's battery. This means
 that ACPI / fdpowermon cannot display the remaining battery load - which is
 quite annoying, as the machine just turns off at some point in time.
@@ -46,8 +47,6 @@ quite annoying, as the machine just turns off at some point in time.
 Bummer...
 
 I am working on that...
-#+end_warning
-
 
 ** Base Debian System
 
@@ -111,9 +110,9 @@ iface wlan0 inet dhcp
 Then I brought up the interface and verified the connection:
 
 #+BEGIN_SRC
-user?> ifup wlan0
-user?> iw wlan0 link
-user?> ip a
+user?> sudo ifup wlan0
+user?> sudo iw wlan0 link
+user?> sudo ip a
 #+END_SRC
 
 
