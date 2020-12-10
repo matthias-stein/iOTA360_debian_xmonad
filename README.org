@@ -38,6 +38,16 @@ The programs the script will install are:
 + Suckless ST (main terminal)
 + Rxvt, XTerm (as backups)
 
+#+begin_warning
+So far I did not manage to have debian recognize the iOTA's battery. This means
+that ACPI / fdpowermon cannot display the remaining battery load - which is
+quite annoying, as the machine just turns off at some point in time.
+
+Bummer...
+
+I am working on that...
+#+end_warning
+
 
 ** Base Debian System
 
@@ -110,8 +120,8 @@ user?> ip a
 ** Install Programms
 
 The only program I installed manually (after the obligatory system upgrade) is
-git, everthing else is part of the git repository's ~install.sh~ I will clone in
-the next step.
+~git~, everthing else is part of the git repository's ~install.sh~ I will clone
+in the next step.
 
 
 ** iOTA360 - Debian 10 (Buster) / Xmonad git repository
@@ -128,6 +138,17 @@ user?> sudo reboot now
 For the installation of Doom Emacs, two questions need to be answered, apart
 from that the rest should run automatically. After installation, you can boot
 into the Xmonad window manager.
+
+All the config files are linked to their destination, not copied. That way, when
+updating the git repository, all the config files are updated as well.
+
+** Network Manager
+
+Network manager by default cannot manage network connections managed by ifup. I
+removed the part from ~/etc/network/interfaces~ that I added as described above.
+After a restart (running ~sudo service network-manager restart~ as idicated by
+my Google search did not work for me) network manager was able to connect to the
+WiFi and the applet in stalonetray in my xmobar is doing its intended job.
 
 
 ** Ressources
