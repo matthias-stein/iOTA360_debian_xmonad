@@ -25,9 +25,9 @@ ln -s $HOME/iOTA360_debian_xmonad/xscreensaver/xscreensaver $HOME/.xscreensaver
 ln -s $HOME/iOTA360_debian_xmonad/xresources/Xresources $HOME/.Xresources
 ln -s $HOME/iOTA360_debian_xmonad/xsessionrc/xsessionrc $HOME/.xsessionrc
 ln -s $HOME/iOTA360_debian_xmonad/stalonetray/stalonetrayrc $HOME/.stalonetrayrc
-sudo ln -s $HOME/iOTA360_debian_xmonad/xdm/Xsetup /etc/X11/xdm/Xsetup
-sudo ln -s $HOME/iOTA360_debian_xmonad/xdm/Xresources /etc/X11/xdm/Xresources
-sudo ln -s $HOME/iOTA360_debian_xmonad/xdm/xdm_login.png /usr/lib/X11/background/xdm_login.png
+sudo ln -sf $HOME/iOTA360_debian_xmonad/xdm/Xsetup /etc/X11/xdm/Xsetup
+sudo ln -sf $HOME/iOTA360_debian_xmonad/xdm/Xresources /etc/X11/xdm/Xresources
+sudo ln -sf $HOME/iOTA360_debian_xmonad/xdm/xdm_login.png /usr/lib/X11/background/xdm_login.png
 
 cd st-0.8.4
 sudo make clean install
