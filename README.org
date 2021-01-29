@@ -48,13 +48,13 @@ Bummer...
 
 I am working on that...
 
-*Update 2021-01-26:* The keyboard of the iOTA stopped respnding a couple days
+*Update 2021-01-26:* The keyboard of the iOTA stopped responding a couple days
 ago, I was only able to use it with an external keyboard. That was it then, I
-lokked for an alternative and got me an ASUS EeePC 1000h from eBay. I use it
-with more or less the same setup, see the [[https://github.com/matthias-stein/ASUSeeePC_debian_xmonad][git repo]].
+looked for an alternative and got me an ASUS EeePC 1000h from eBay. I use it
+with more or less the same setup, see the [[https://github.com/matthias-stein/EeePC1000h_debian_xmonad][git repo]].
 
 I will leave this git repo online, perhaps it will be of help to someone else
-with an iOTA360.
+with an iOTA360 or similar device.
 
 ** Base Debian System
 
